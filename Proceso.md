@@ -6,7 +6,7 @@
 ##  Entorno virtual:
 Creación de entorno virtual con el paquete de **ANACONDA** dentro de la carpeta creada `FastAPI-REST-API-CRUD` con el nombre opcional **FastAPI-REST-API-CRUD**.
 ```sh
-conda create --name FastAPI-REST-API-CRUD
+conda create --name FastAPI-REST-API-CRUD python=3
 ```
 ### Activar el entorno virtual
 ```sh
@@ -33,3 +33,28 @@ python app.py
 [Visualizar las rutas de la App]()
 
 
+#   Con virtualENV
+Instalar
+```sh
+pip install virtualenv
+```
+```sh
+virtualenv env
+```
+Ingresar al entorno creado y Activarlo:
+```sh
+.\env\Scripts\activate
+```
+Desactivarlo:
+```sh
+deactivate
+```
+
+##  Instalación de FastAPI:
+```sh
+pip install fastapi
+```
+Listar los paquetes instalados
+```sh
+pip list
+```
