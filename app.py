@@ -3,11 +3,13 @@ from pydantic import BaseModel
 from typing import Text, Optional
 from datetime import date, datetime
 from uuid import uuid4 as uuid
+import uvicorn
 
 
 app = FastAPI()
 
 posts = []
+
 
 #   Post Model
 class Post(BaseModel):
@@ -17,11 +19,11 @@ class Post(BaseModel):
     content: Text
     created_at: datetime = datetime.now()
     published_at: Optional[datetime]
-    published: bool = False
+    published: Optional[bool] = False
 
 @app.get('/')
 def read_root():
-    return {"welcome": "Welcome to my REST API"}
+    return {"welcome": "Welcome to my first REST API with FastAPI"}
 
 @app.get('/posts')
 def get_posts():
@@ -30,10 +32,34 @@ def get_posts():
 @app.post('/posts')
 def save_post(post: Post):
     #print(post.dict())
-    posts.id = uuid()
+    post.id = str(uuid())
     posts.append(post.dict())
-    return "received"
+    return posts[-1]
 
 
+@app.get('/posts/{post_id}')
+def get_post(post_id: str):
+    for post in posts:
+        if post["id"] == post_id:
+            return post
+    raise HTTPException(status_code=404, detail="Item not found")
 
 
+@app.delete('/posts/{post_id}')
+def delete_post(post_id: str):
+    for index, post in enumerate(posts):
+        if post['id'] == post_id:
+            posts.pop(index)
+            return {"message": "Post has been deleted succesfully"}
+    raise HTTPException(status_code=404, detail="Item not found")
+
+
+@app.put('/posts/{post_id}')
+def update_post(post_id: str, updatedPost: Post):
+    for index, post in enumerate(posts):
+        if post['id'] == post_id:
+            posts[index]["title"] = updatedPost.dict()["title"]
+            posts[index]["author"] = updatedPost.dict()["author"]
+            posts[index]["content"] = updatedPost.dict()["content"]
+            return {"message": "Post has been deleted succesfully"}
+    raise HTTPException(status_code=404, detail="Item not found")
