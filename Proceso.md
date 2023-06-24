@@ -58,3 +58,17 @@ Listar los paquetes instalados
 ```sh
 pip list
 ```
+##  Instalación de Uvicorn:
+Para iniciar el servidor de Python
+```sh
+pip install uvicorn
+```
+### Iniciando la App de Python
+```sh
+uvicorn app:app
+```
+
+##  Listando paquetes en un TXT:
+```sh
+python freeze > requeriments.txt
+```
